@@ -1,12 +1,10 @@
 import XPkgPackage
 
-let links = [
-    ["Scripts/xXxprojectCamelxXx-command.sh"]
-]
-
-let arguments = CommandLine.arguments
-let package = InstalledPackage(fromCommandLine: arguments)
-if let action = package.action(fromCommandLine: arguments) {
-    let commands = action == .install ? [["Scripts/setup.sh"]] : []
-    try! package.performAction(fromCommandLine: CommandLine.arguments, links: links, commands: commands)
-}
+let package = Package()
+try package.run(
+    links: [
+        .script("setup"),
+        .script("setup.fish", to: "~/.config/fish/conf.d/com.elegantchaos.xpkg-xXxprojectxXx.fish"),
+        .function("xXxprojectxXx"),
+    ]
+)
